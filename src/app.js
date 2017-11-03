@@ -11,7 +11,7 @@ const i18n = require('./config/i18n');
 
 /* Routes */
 const alunoRoutes = require('./routes/aluno');
-const mediaRoutes = require('./routes/media');
+// const mediaRoutes = require('./routes/media');
 const filmeRoutes = require('./routes/filme');
 const livroRoutes = require('./routes/livro');
 
@@ -43,7 +43,7 @@ app.get('/', (req, res) => {
 app.use('/aluno', alunoRoutes);
 // app.use('/media', mediaRoutes);
 app.use('/filme', filmeRoutes);
-// app.use('/livro', livroRoutes);
+app.use('/livro', livroRoutes);
 
 /* Log errors */
 LoggerConfig.expressError(app);
