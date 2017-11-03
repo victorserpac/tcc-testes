@@ -1,26 +1,39 @@
+const _ = require('lodash');
 const MediaModel = require('../models/MediaModel');
 
 class MediaService {
 
   static async listar() {
-    try {
-      const medias = await MediaModel.listar();
+    const busca = await MediaModel.listar();
 
-      return medias;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  static async obter(matricula) {
-    try {
-      const media = await MediaModel.obter(matricula);
-
-      if (media.length === 0) {
-        return null;
+    const medias = busca.map((media) => {
+      if (_.some(media.livro, _.identity)) {
+        return _.merge(media.media, media.livro);
       }
 
-      return media;
+      if (_.some(media.filme, _.identity)) {
+        return _.merge(media.media, media.filme);
+      }
+
+      return media.media;
+    });
+
+    return medias;
+  }
+
+  static async obter(id) {
+    try {
+      const media = await MediaModel.obter(id);
+
+      if (_.some(media.livro, _.identity)) {
+        return _.merge(media.media, media.livro);
+      }
+
+      if (_.some(media.filme, _.identity)) {
+        return _.merge(media.media, media.filme);
+      }
+
+      return media.media;
     } catch (error) {
       throw error;
     }
@@ -50,18 +63,8 @@ class MediaService {
     }
   }
 
-  static async deletar(matricula) {
-    try {
-      const delecao = await MediaModel.deletar(matricula);
-
-      if (delecao) {
-        return true;
-      }
-
-      return false;
-    } catch (error) {
-      throw error;
-    }
+  static async excluir(id) {
+    return MediaModel.excluir(id);
   }
 }
 
