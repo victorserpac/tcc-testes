@@ -7,8 +7,10 @@
     "start": "pm2 start process.yml",
     "stop": "pm2 stop process.yml",
     "restart": "pm2 restart process.yml",
-    "dev": "nodemon src/app.js",
+    "dev": "nodemon index.js",
     "test": "nyc ava",
+    "test:dev": "ava --verbose --color",
+    "test:dev:watch": "ava --verbose --watch --color",
     "lint": "eslint src test || exit 0",
     "cover": "nyc report --reporter=text-lcov | coveralls"
   },
@@ -37,10 +39,16 @@
   },
   "devDependencies": {
     "ava": "^0.22.0",
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
     "coveralls": "^3.0.0",
     "eslint": "^4.8.0",
     "eslint-config-airbnb-base": "^12.0.2",
     "eslint-plugin-import": "^2.2.0",
-    "nyc": "^11.2.1"
+    "nyc": "^11.2.1",
+    "sinon": "^4.1.1"
+  },
+  "ava": {
+    "failWithoutAssertions": false
   }
 }

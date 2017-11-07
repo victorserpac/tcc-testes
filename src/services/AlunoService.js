@@ -1,30 +1,12 @@
 const AlunoModel = require('../models/AlunoModel');
-const Convert = require('../helpers/Conversion');
 
 class AlunoService {
-
-  static async listar() {
-    try {
-      const alunos = await AlunoModel.listar();
-
-      return alunos;
-    } catch (error) {
-      throw error;
-    }
+  static listar() {
+    return AlunoModel.listar();
   }
 
-  static async obter(matricula) {
-    try {
-      const aluno = await AlunoModel.obter(matricula);
-
-      if (aluno.length === 0) {
-        return null;
-      }
-
-      return aluno;
-    } catch (error) {
-      throw error;
-    }
+  static obter(matricula) {
+    return AlunoModel.obter(matricula);
   }
 
   static async criar(data) {
@@ -51,9 +33,9 @@ class AlunoService {
     }
   }
 
-  static async deletar(matricula) {
+  static async excluir(matricula) {
     try {
-      const delecao = await AlunoModel.deletar(matricula);
+      const delecao = await AlunoModel.excluir(matricula);
 
       if (delecao) {
         return true;
