@@ -37,7 +37,22 @@ class AlunoController {
       res.send({ matricula });
     } catch (error) {
       if (error.code === 'ER_DUP_ENTRY') {
-        res.status(400).send({ message: 'Aluno já matriculado' });
+        const { matricula } = req.body;
+        const aluno = await AlunoService.obter(matricula);
+
+        if (aluno) {
+          res.status(400).send({ message: 'Aluno já matriculado' });
+          return;
+        }
+
+        const edicao = await AlunoService.editar(matricula, { deleted_at: null });
+
+        if (edicao) {
+          res.send({ matricula });
+          return;
+        }
+
+        res.status(400).send({ message: 'Não foi possível realizar a operação. Tente novamente' });
         return;
       }
 
