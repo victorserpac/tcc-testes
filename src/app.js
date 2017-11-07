@@ -20,7 +20,6 @@ const app = express();
 
 /* Logger */
 const LoggerConfig = require('./config/LoggerConfig');
-const Logger = require('./helpers/Logger');
 
 /* Express utilites */
 app.use(helmet());
@@ -52,9 +51,6 @@ app.all('*', (req, res) => {
   res.status(404).send({ success: false, code: '404' });
 });
 
-/* Startup message */
-app.listen(process.env.PORT, () => {
-  /* Configure Log */
-  LoggerConfig.init();
-  Logger.info(`Server started on port ${process.env.PORT}`);
-});
+LoggerConfig.init();
+
+module.exports = app;
