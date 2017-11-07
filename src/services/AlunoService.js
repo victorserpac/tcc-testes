@@ -9,9 +9,9 @@ class AlunoService {
     return AlunoModel.obter(matricula);
   }
 
-  static async criar(data) {
+  static async criar(dados) {
     try {
-      const dbIds = await AlunoModel.criar(data);
+      const dbIds = await AlunoModel.criar(dados);
 
       return dbIds[0];
     } catch (error) {
