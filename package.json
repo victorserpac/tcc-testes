@@ -8,7 +8,7 @@
     "stop": "pm2 stop process.yml",
     "restart": "pm2 restart process.yml",
     "dev": "nodemon index.js",
-    "test": "nyc ava",
+    "test": "nyc ava --serial",
     "test:dev": "ava --verbose --serial",
     "test:unit": "ava test/**/*.spec.unit.js --verbose",
     "test:integ": "ava test/**/*.spec.integration.js --verbose --serial",
@@ -16,7 +16,7 @@
     "test:unit:watch": "ava test/**/*.spec.unit.js --verbose --watch",
     "test:integ:watch": "ava test/**/*.spec.integration.js --verbose --serial --watch",
     "lint": "eslint src test || exit 0",
-    "cover": "nyc report --reporter=text-lcov | coveralls"
+    "cover": "nyc report --reporter=html"
   },
   "author": "Victor Serpa do Carmo",
   "license": "MIT",
