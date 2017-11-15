@@ -37,8 +37,7 @@ test.serial('listar(): Deve retornar lista vazia de alunos', async () => {
   const alunos = await AlunoModel.listar();
 
   // certificar comportamento esperado
-  expect(alunos).to.be.an('array');
-  expect(alunos).to.be.empty;
+  expect(alunos).to.be.an('array').that.is.empty;
 });
 
 test.serial('listar(): Deve listar alunos do banco', async () => {
