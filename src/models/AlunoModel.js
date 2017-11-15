@@ -14,7 +14,7 @@ class AlunoModel {
     return knex
       .select(CAMPOS_ALUNO)
       .from('aluno')
-      .whereNull('aluno.deleted_at');
+      .whereNull('deleted_at');
   }
 
   static obter(matricula) {
@@ -45,7 +45,7 @@ class AlunoModel {
     return knex
       .update(dados)
       .from('aluno')
-      .where('aluno.matricula', matricula);
+      .where('matricula', matricula);
   }
 
   static excluir(matricula) {
