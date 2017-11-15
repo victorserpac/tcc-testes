@@ -21,8 +21,8 @@ class AlunoModel {
     return knex
       .select(CAMPOS_ALUNO)
       .from('aluno')
-      .where('aluno.matricula', matricula)
-      .whereNull('aluno.deleted_at')
+      .where('matricula', matricula)
+      .whereNull('deleted_at')
       .first();
   }
 
@@ -30,8 +30,8 @@ class AlunoModel {
     return knex
       .select(CAMPOS_ALUNO)
       .from('aluno')
-      .where('aluno.matricula', matricula)
-      .whereNull('aluno.deleted_at')
+      .where('matricula', matricula)
+      .whereNotNull('deleted_at')
       .first();
   }
 
@@ -58,11 +58,10 @@ class AlunoModel {
       .whereNull('deleted_at');
   }
 
-  static hardDelete(matricula) {
+  static cleanup() {
     return knex
       .delete()
-      .from('aluno')
-      .where('matricula', matricula);
+      .from('aluno');
   }
 }
 
