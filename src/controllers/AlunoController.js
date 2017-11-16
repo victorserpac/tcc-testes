@@ -41,7 +41,7 @@ class AlunoController {
         const aluno = await AlunoService.obter(matricula);
 
         if (aluno) {
-          res.status(400).send({ message: 'Aluno já matriculado' });
+          res.status(400).send({ mensagem: 'Aluno já matriculado' });
           return;
         }
 
@@ -52,7 +52,7 @@ class AlunoController {
           return;
         }
 
-        res.status(400).send({ message: 'Não foi possível realizar a operação. Tente novamente' });
+        res.status(400).send({ mensagem: 'Não foi possível realizar a operação. Tente novamente' });
         return;
       }
 
@@ -81,7 +81,7 @@ class AlunoController {
   static async delete(req, res) {
     try {
       const { matricula } = req.params;
-      const sucesso = await AlunoService.deletar(matricula);
+      const sucesso = await AlunoService.excluir(matricula);
 
       if (!sucesso) {
         res.send({ mensagem: 'Aluno não encontrado' });
@@ -93,7 +93,6 @@ class AlunoController {
       Logger.throw(res, '5768905476', error);
     }
   }
-
 }
 
 module.exports = AlunoController;
