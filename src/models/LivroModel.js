@@ -2,12 +2,12 @@ const Conversion = require('../helpers/Conversion');
 const { knex } = require('../config/db');
 
 const CAMPOS_LIVRO = [
-  'media.id',
-  'media.titulo',
-  'media.capa',
+  'midia.id',
+  'midia.titulo',
+  'midia.capa',
   'livro.autor',
   'livro.editora',
-  'media.created_at',
+  'midia.created_at',
 ];
 
 class LivroModel {
@@ -15,17 +15,17 @@ class LivroModel {
     return knex
       .select(CAMPOS_LIVRO)
       .from('livro')
-      .leftJoin('media', 'livro.media_id', 'media.id')
-      .whereNull('media.deleted_at');
+      .leftJoin('midia', 'livro.midia_id', 'midia.id')
+      .whereNull('midia.deleted_at');
   }
 
-  static obter(mediaId) {
+  static obter(midiaId) {
     return knex
       .select(CAMPOS_LIVRO)
       .from('livro')
-      .leftJoin('media', 'livro.media_id', 'media.id')
-      .where('media.id', mediaId)
-      .whereNull('media.deleted_at')
+      .leftJoin('midia', 'livro.midia_id', 'midia.id')
+      .where('midia.id', midiaId)
+      .whereNull('midia.deleted_at')
       .first();
   }
 
@@ -35,20 +35,20 @@ class LivroModel {
       .into('livro');
   }
 
-  static editar(mediaId, dados) {
+  static editar(midiaId, dados) {
     return knex
       .update(dados)
       .from('livro')
-      .where('livro.media_id', mediaId);
+      .where('livro.midia_id', midiaId);
   }
 
-  static excluir(mediaId) {
+  static excluir(midiaId) {
     return knex
       .update({
         deleted_at: Conversion.getLocal().format('YYYY-MM-DD HH:mm:ss'),
       })
-      .from('media')
-      .where('id', mediaId);
+      .from('midia')
+      .where('id', midiaId);
   }
 }
 

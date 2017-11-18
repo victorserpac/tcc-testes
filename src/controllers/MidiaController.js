@@ -1,13 +1,13 @@
 const Logger = require('../helpers/Logger');
-const MediaService = require('../services/MediaService');
+const MidiaService = require('../services/MidiaService');
 
-class MediaController {
+class MidiaController {
 
   static async list(req, res) {
     try {
-      const medias = await MediaService.listar();
+      const midias = await MidiaService.listar();
 
-      res.send({ medias });
+      res.send({ midias });
     } catch (error) {
       Logger.throw(res, '3272358416', error);
     }
@@ -17,14 +17,14 @@ class MediaController {
     try {
       const { id } = req.params;
 
-      const media = await MediaService.obter(id);
+      const midia = await MidiaService.obter(id);
 
-      if (!media) {
-        res.send({ mensagem: 'Media não encontrado' });
+      if (!midia) {
+        res.send({ mensagem: 'Midia não encontrado' });
         return;
       }
 
-      res.send({ media });
+      res.send({ midia });
     } catch (error) {
       Logger.throw(res, '6001059324', error);
     }
@@ -33,7 +33,7 @@ class MediaController {
   static async delete(req, res) {
     try {
       const { id } = req.params;
-      const exclusao = await MediaService.excluir(id);
+      const exclusao = await MidiaService.excluir(id);
 
       if (exclusao === 0) {
         res.send({ mensagem: 'Livro não encontrado' });
@@ -48,4 +48,4 @@ class MediaController {
 
 }
 
-module.exports = MediaController;
+module.exports = MidiaController;

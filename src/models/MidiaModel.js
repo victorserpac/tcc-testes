@@ -2,37 +2,37 @@ const Conversion = require('../helpers/Conversion');
 const { knex } = require('../config/db');
 
 const CAMPOS = [
-  'media.id',
-  'media.titulo',
-  'media.capa',
+  'midia.id',
+  'midia.titulo',
+  'midia.capa',
   'filme.sinopse',
   'filme.diretor',
   'filme.duracao',
   'livro.autor',
   'livro.editora',
-  'media.created_at',
+  'midia.created_at',
 ];
 
-class MediaModel {
+class MidiaModel {
 
   static listar() {
     return knex
       .select(CAMPOS)
-      .from('media')
-      .leftJoin('livro', 'media.id', 'livro.media_id')
-      .leftJoin('filme', 'media.id', 'filme.media_id')
-      .whereNull('media.deleted_at')
+      .from('midia')
+      .leftJoin('livro', 'midia.id', 'livro.midia_id')
+      .leftJoin('filme', 'midia.id', 'filme.midia_id')
+      .whereNull('midia.deleted_at')
       .options({ nestTables: true });
   }
 
   static obter(id) {
     return knex
       .select(CAMPOS)
-      .from('media')
-      .leftJoin('livro', 'media.id', 'livro.media_id')
-      .leftJoin('filme', 'media.id', 'filme.media_id')
-      .whereNull('media.deleted_at')
-      .where('media.id', id)
+      .from('midia')
+      .leftJoin('livro', 'midia.id', 'livro.midia_id')
+      .leftJoin('filme', 'midia.id', 'filme.midia_id')
+      .whereNull('midia.deleted_at')
+      .where('midia.id', id)
       .options({ nestTables: true })
       .first();
   }
@@ -42,10 +42,10 @@ class MediaModel {
       .update({
         deleted_at: Conversion.getLocal().format('YYYY-MM-DD HH:mm:ss'),
       })
-      .from('media')
-      .where('media.id', id);
+      .from('midia')
+      .where('midia.id', id);
   }
 
 }
 
-module.exports = MediaModel;
+module.exports = MidiaModel;
