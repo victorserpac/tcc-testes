@@ -21,9 +21,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tcc_testes_api_rest`.`media`
+-- Table `tcc_testes_api_rest`.`midia`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tcc_testes_api_rest`.`media` (
+CREATE TABLE IF NOT EXISTS `tcc_testes_api_rest`.`midia` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `titulo` VARCHAR(45) NULL,
   `capa` VARCHAR(200) NULL,
@@ -39,12 +39,12 @@ ENGINE = InnoDB;
 -- Table `tcc_testes_api_rest`.`filme`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tcc_testes_api_rest`.`filme` (
-  `media_id` INT NOT NULL,
+  `midia_id` INT NOT NULL,
   `sinopse` TEXT NULL,
   `diretor` VARCHAR(45) NULL,
   `duracao` VARCHAR(45) NULL,
-  PRIMARY KEY (`media_id`),
-  FOREIGN KEY (`media_id`) REFERENCES `tcc_testes_api_rest`.`media` (`id`)
+  PRIMARY KEY (`midia_id`),
+  FOREIGN KEY (`midia_id`) REFERENCES `tcc_testes_api_rest`.`midia` (`id`)
 )
 ENGINE = InnoDB;
 
@@ -53,11 +53,11 @@ ENGINE = InnoDB;
 -- Table `tcc_testes_api_rest`.`livro`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tcc_testes_api_rest`.`livro` (
-  `media_id` INT NOT NULL,
+  `midia_id` INT NOT NULL,
   `autor` VARCHAR(45) NULL,
   `editora` VARCHAR(45) NULL,
-  PRIMARY KEY (`media_id`),
-  FOREIGN KEY (`media_id`) REFERENCES `tcc_testes_api_rest`.`media` (`id`)
+  PRIMARY KEY (`midia_id`),
+  FOREIGN KEY (`midia_id`) REFERENCES `tcc_testes_api_rest`.`midia` (`id`)
 )
 ENGINE = InnoDB;
 
@@ -67,11 +67,11 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tcc_testes_api_rest`.`aluguel` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `media_id` INT NOT NULL,
+  `midia_id` INT NOT NULL,
   `aluno_matricula` BIGINT NOT NULL,
   `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`media_id`) REFERENCES `tcc_testes_api_rest`.`media` (`id`),
+  FOREIGN KEY (`midia_id`) REFERENCES `tcc_testes_api_rest`.`midia` (`id`),
   FOREIGN KEY (`aluno_matricula`) REFERENCES `tcc_testes_api_rest`.`aluno` (`matricula`)
 )
 ENGINE = InnoDB;

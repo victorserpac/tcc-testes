@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const FilmeModel = require('../models/FilmeModel');
-const MediaService = require('../services/MediaService');
+const MidiaService = require('../services/MidiaService');
 
 class FilmeService {
 
@@ -14,21 +14,21 @@ class FilmeService {
     }
   }
 
-  static async obter(mediaId) {
-    return FilmeModel.obter(mediaId);
+  static async obter(midiaId) {
+    return FilmeModel.obter(midiaId);
   }
 
   static async criar(dados) {
     try {
-      const dadosMedia = {
+      const dadosMidia = {
         titulo: dados.titulo,
         capa: dados.capa,
       };
 
-      const mediaId = await MediaService.criar(dadosMedia);
+      const midiaId = await MidiaService.criar(dadosMidia);
 
       const dadosFilme = {
-        media_id: mediaId,
+        midia_id: midiaId,
         sinopse: dados.sinopse,
         diretor: dados.diretor,
         duracao: dados.duracao,
@@ -36,13 +36,13 @@ class FilmeService {
 
       await FilmeModel.criar(dadosFilme);
 
-      return mediaId;
+      return midiaId;
     } catch (error) {
       throw error;
     }
   }
 
-  static async editar(mediaId, dados) {
+  static async editar(midiaId, dados) {
     try {
       const dadosFilme = {
         sinopse: dados.sinopse,
@@ -52,20 +52,20 @@ class FilmeService {
 
 
       if (_.some(dadosFilme, _.identity)) {
-        const edicao = await FilmeModel.editar(mediaId, dadosFilme);
+        const edicao = await FilmeModel.editar(midiaId, dadosFilme);
 
         if (edicao === 0) {
           return false;
         }
       }
 
-      const dadosMedia = {
+      const dadosMidia = {
         titulo: dados.titulo,
         capa: dados.capa,
       };
 
-      if (_.some(dadosMedia, _.identity)) {
-        const edicao = await MediaService.editar(mediaId, dadosMedia);
+      if (_.some(dadosMidia, _.identity)) {
+        const edicao = await MidiaService.editar(midiaId, dadosMidia);
 
         if (edicao === false) {
           return false;
@@ -78,8 +78,8 @@ class FilmeService {
     }
   }
 
-  static async excluir(mediaId) {
-    return FilmeModel.excluir(mediaId);
+  static async excluir(midiaId) {
+    return FilmeModel.excluir(midiaId);
   }
 }
 

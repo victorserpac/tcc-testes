@@ -1,3 +1,4 @@
+/* eslint-disable */
 const { test } = require('ava');
 const sinon = require('sinon');
 const chai = require('chai');
@@ -10,174 +11,128 @@ const { expect } = chai;
 const AlunoService = require('../../src/services/AlunoService');
 const AlunoModel = require('../../src/models/AlunoModel');
 
+const aluno = () => ({
+  matricula: 20142850076,
+  nome: 'Victor Serpa do Carmo',
+  turma: 'TSI',
+});
+
+let sandbox;
+
+test.beforeEach(() => {
+  sandbox = sinon.sandbox.create();
+});
+
+test.afterEach.always(() => {
+  sandbox.restore();
+});
+
 test.serial('listar(): deve garantir que listar() de AlunoModel seja invocado', async () => {
-  const stub = sinon.stub(AlunoModel, 'listar');
+  const listar = sandbox.stub(AlunoModel, 'listar');
 
   AlunoService.listar();
 
-  expect(stub.called).to.be.true;
-
-  stub.restore();
+  expect(listar.called).to.be.true;
 });
 
 test.serial('obter(): deve garantir que obter() de AlunoModel seja invocado', async () => {
-  const stub = sinon.stub(AlunoModel, 'obter');
+  const obter = sandbox.stub(AlunoModel, 'obter');
 
   AlunoService.obter();
 
-  expect(stub.called).to.be.true;
-
-  stub.restore();
+  expect(obter.called).to.be.true;
 });
 
 test.serial('criar(): deve garantir que criar() de AlunoModel seja invocado com os dados passados', async () => {
-  const dadosNovoAluno = {
-    matricula: 1,
-    nome: 'Victor Serpa do Carmo',
-    curso: 'TSI',
-  };
+  const dadosNovoAluno = aluno();
 
-  const stub = sinon.stub(AlunoModel, 'criar').resolves([dadosNovoAluno.matricula]);
+  const criar = sandbox.stub(AlunoModel, 'criar').resolves([dadosNovoAluno.matricula]);
 
   const matricula = await AlunoService.criar(dadosNovoAluno);
 
-  expect(stub.called).to.be.true;
-  expect(stub.calledWith(dadosNovoAluno)).to.be.true;
+  expect(criar.calledWith(dadosNovoAluno)).to.be.true;
   expect(matricula).to.equal(dadosNovoAluno.matricula);
-
-  stub.restore();
 });
 
 test.serial('criar(): deve rejeitar promise', async () => {
-  const dadosNovoAluno = {
-    matricula: 1,
-    nome: 'Victor Serpa do Carmo',
-    curso: 'TSI',
-  };
-  const error = new Error('Erro de teste');
+  const dadosNovoAluno = aluno();
 
-  const stub = sinon.stub(AlunoModel, 'criar').rejects(error);
-  const promise = AlunoService.criar(dadosNovoAluno);
+  const criar = sandbox.stub(AlunoModel, 'criar').rejects();
 
-  expect(promise).to.be.rejected;
-  expect(stub.called).to.be.true;
-  expect(stub.calledWith(dadosNovoAluno)).to.be.true;
-
-  try {
-    await promise;
-  } catch (err) {
-    expect(err).to.deep.equal(error);
-  }
-
-  stub.restore();
+  expect(AlunoService.criar(dadosNovoAluno)).to.be.rejected;
+  expect(criar.calledWith(dadosNovoAluno)).to.be.true;
 });
 
 test.serial('editar(): deve garantir que editar() de AlunoModel seja invocado corretamente', async () => {
-  const matricula = 1;
+  const matricula = 20142850076;
   const dadosParaEditar = {
     nome: 'Milene Vieira Lacerda',
     curso: 'ASD',
   };
 
-  const stub = sinon.stub(AlunoModel, 'editar').resolves(1);
+  const editar = sandbox.stub(AlunoModel, 'editar').resolves(1);
 
   const edicao = await AlunoService.editar(matricula, dadosParaEditar);
 
   expect(edicao).to.be.true;
-  expect(stub.called).to.be.true;
-  expect(stub.calledWith(matricula, dadosParaEditar)).to.be.true;
-
-  stub.restore();
+  expect(editar.calledWith(matricula, dadosParaEditar)).to.be.true;
 });
 
 test.serial('editar(): deve garantir que editar() de AlunoModel seja invocado corretamente para edicao não realizada', async () => {
-  const matricula = 1;
+  const matricula = 20142850076;
   const dadosParaEditar = {
     nome: 'Milene Vieira Lacerda',
     curso: 'ASD',
   };
 
-  const stub = sinon.stub(AlunoModel, 'editar').resolves(0);
+  const editar = sandbox.stub(AlunoModel, 'editar').resolves(0);
 
   const edicao = await AlunoService.editar(matricula, dadosParaEditar);
 
   expect(edicao).to.be.false;
-  expect(stub.called).to.be.true;
-  expect(stub.calledWith(matricula, dadosParaEditar)).to.be.true;
-
-  stub.restore();
+  expect(editar.calledWith(matricula, dadosParaEditar)).to.be.true;
 });
 
 test.serial('editar(): deve garantir que editar() de AlunoModel lançe um erro', async () => {
-  const matricula = 1;
+  const matricula = 20142850076;
   const dadosParaEditar = {
     nome: 'Milene Vieira Lacerda',
     curso: 'ASD',
   };
 
-  const erro = new Error('erro de teste');
+  const editar = sandbox.stub(AlunoModel, 'editar').rejects();
 
-  const stub = sinon.stub(AlunoModel, 'editar').rejects(erro);
-
-  const promise = AlunoService.editar(matricula, dadosParaEditar);
-
-  expect(promise).to.be.rejected;
-  expect(stub.called).to.be.true;
-  expect(stub.calledWith(matricula, dadosParaEditar)).to.be.true;
-
-  try {
-    await promise;
-  } catch (error) {
-    expect(error).to.deep.equal(erro);
-  }
-
-  stub.restore();
+  expect(AlunoService.editar(matricula, dadosParaEditar)).to.be.rejected;
+  expect(editar.calledWith(matricula, dadosParaEditar)).to.be.true;
 });
 
 test.serial('excluir(): deve garantir que excluir() de AlunoModel seja invocado corretamente', async () => {
-  const matricula = 1;
+  const matricula = 20142850076;
 
-  const stub = sinon.stub(AlunoModel, 'excluir').resolves(1);
+  const excluir = sandbox.stub(AlunoModel, 'excluir').resolves(1);
 
   const exclusao = await AlunoService.excluir(matricula);
 
   expect(exclusao).to.be.true;
-  expect(stub.called).to.be.true;
-  expect(stub.calledWith(matricula)).to.be.true;
-
-  stub.restore();
+  expect(excluir.calledWith(matricula)).to.be.true;
 });
 
 test.serial('excluir(): deve garantir que editar() de AlunoModel seja invocado corretamente para edicao não realizada', async () => {
-  const matricula = 1;
+  const matricula = 20142850076;
 
-  const stub = sinon.stub(AlunoModel, 'excluir').resolves(0);
+  const excluir = sandbox.stub(AlunoModel, 'excluir').resolves(0);
 
   const exclusao = await AlunoService.excluir(matricula);
 
   expect(exclusao).to.be.false;
-  expect(stub.called).to.be.true;
-  expect(stub.calledWith(matricula)).to.be.true;
-
-  stub.restore();
+  expect(excluir.calledWith(matricula)).to.be.true;
 });
 
 test.serial('excluir(): deve garantir que editar() de AlunoModel lançe um erro', async () => {
-  const matricula = 1;
-  const erro = new Error('erro de teste');
-  const stub = sinon.stub(AlunoModel, 'excluir').rejects(erro);
+  const matricula = 20142850076;
 
-  const promise = AlunoService.excluir(matricula);
+  const excluir = sandbox.stub(AlunoModel, 'excluir').rejects();
 
-  expect(promise).to.be.rejected;
-  expect(stub.called).to.be.true;
-  expect(stub.calledWith(matricula)).to.be.true;
-
-  try {
-    await promise;
-  } catch (error) {
-    expect(error).to.deep.equal(erro);
-  }
-
-  stub.restore();
+  expect(AlunoService.excluir(matricula)).to.be.rejected;
+  expect(excluir.calledWith(matricula)).to.be.true;
 });

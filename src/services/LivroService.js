@@ -1,40 +1,40 @@
 const _ = require('lodash');
 const LivroModel = require('../models/LivroModel');
-const MediaService = require('../services/MediaService');
+const MidiaService = require('../services/MidiaService');
 
 class LivroService {
   static listar() {
     return LivroModel.listar();
   }
 
-  static obter(mediaId) {
-    return LivroModel.obter(mediaId);
+  static obter(midiaId) {
+    return LivroModel.obter(midiaId);
   }
 
   static async criar(dados) {
     try {
-      const dadosMedia = {
+      const dadosMidia = {
         titulo: dados.titulo,
         capa: dados.capa,
       };
 
-      const mediaId = await MediaService.criar(dadosMedia);
+      const midiaId = await MidiaService.criar(dadosMidia);
 
       const dadosLivro = {
-        media_id: mediaId,
+        midia_id: midiaId,
         autor: dados.autor,
         editora: dados.editora,
       };
 
       await LivroModel.criar(dadosLivro);
 
-      return mediaId;
+      return midiaId;
     } catch (error) {
       throw error;
     }
   }
 
-  static async editar(mediaId, dados) {
+  static async editar(midiaId, dados) {
     try {
       const dadosLivro = {
         autor: dados.autor,
@@ -43,20 +43,20 @@ class LivroService {
 
 
       if (_.some(dadosLivro, _.identity)) {
-        const edicao = await LivroModel.editar(mediaId, dadosLivro);
+        const edicao = await LivroModel.editar(midiaId, dadosLivro);
 
         if (edicao === 0) {
           return false;
         }
       }
 
-      const dadosMedia = {
+      const dadosMidia = {
         titulo: dados.titulo,
         capa: dados.capa,
       };
 
-      if (_.some(dadosMedia, _.identity)) {
-        const edicao = await MediaService.editar(mediaId, dadosMedia);
+      if (_.some(dadosMidia, _.identity)) {
+        const edicao = await MidiaService.editar(midiaId, dadosMidia);
 
         if (edicao === false) {
           return false;
@@ -69,8 +69,8 @@ class LivroService {
     }
   }
 
-  static async excluir(mediaId) {
-    return LivroModel.excluir(mediaId);
+  static async excluir(midiaId) {
+    return LivroModel.excluir(midiaId);
   }
 }
 

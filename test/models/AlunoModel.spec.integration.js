@@ -107,8 +107,7 @@ test.serial('criar(): Deve persistir um aluno no banco', async () => {
   const resultado = await AlunoModel.criar(aluno);
 
   // certificar comportamento esperado
-  expect(resultado).to.be.an('array').that.have.lengthOf(1);
-  expect(resultado[0]).to.equal(aluno.matricula);
+  expect(resultado).to.be.an('array').that.has.lengthOf(1).that.includes(aluno.matricula);
 });
 
 test.serial('editar(): Deve retornar 1 para edição feita', async () => {
