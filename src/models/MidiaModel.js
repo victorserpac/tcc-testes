@@ -46,7 +46,7 @@ class MidiaModel {
   static editar(id, dados) {
     return knex
       .update(dados)
-      .from('mdia')
+      .from('midia')
       .where('midia.id', id);
   }
 
@@ -59,6 +59,11 @@ class MidiaModel {
       .where('midia.id', id);
   }
 
+  static cleanup() {
+    return knex
+      .delete()
+      .from('midia');
+  }
 }
 
 module.exports = MidiaModel;

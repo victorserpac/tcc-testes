@@ -50,6 +50,12 @@ class LivroModel {
       .from('midia')
       .where('id', midiaId);
   }
+
+  static cleanup() {
+    return knex
+      .delete()
+      .from('livro');
+  }
 }
 
 module.exports = LivroModel;
