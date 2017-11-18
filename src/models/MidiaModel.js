@@ -37,6 +37,19 @@ class MidiaModel {
       .first();
   }
 
+  static criar(dados) {
+    return knex
+      .insert(dados)
+      .into('midia');
+  }
+
+  static editar(id, dados) {
+    return knex
+      .update(dados)
+      .from('mdia')
+      .where('midia.id', id);
+  }
+
   static excluir(id) {
     return knex
       .update({

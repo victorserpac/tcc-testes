@@ -25,6 +25,10 @@ class MidiaService {
     try {
       const midia = await MidiaModel.obter(id);
 
+      if (!midia) {
+        return false;
+      }
+
       if (_.some(midia.livro, _.identity)) {
         return _.merge(midia.midia, midia.livro);
       }
