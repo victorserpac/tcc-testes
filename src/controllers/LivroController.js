@@ -15,9 +15,9 @@ class LivroController {
 
   static async get(req, res) {
     try {
-      const { mediaId } = req.params;
+      const { midiaId } = req.params;
 
-      const livro = await LivroService.obter(mediaId);
+      const livro = await LivroService.obter(midiaId);
 
       if (!livro) {
         res.send({ mensagem: 'Livro não encontrado' });
@@ -33,20 +33,20 @@ class LivroController {
   static async post(req, res) {
     try {
       const dados = req.body;
-      const mediaId = await LivroService.criar(dados);
+      const midiaId = await LivroService.criar(dados);
 
-      res.send({ mediaId });
+      res.send({ midiaId });
     } catch (error) {
       Logger.throw(res, '2365958507', error);
     }
   }
 
   static async put(req, res) {
-    const { mediaId } = req.params;
+    const { midiaId } = req.params;
     const dados = req.body;
 
     try {
-      const edicao = await LivroService.editar(mediaId, dados);
+      const edicao = await LivroService.editar(midiaId, dados);
 
       if (!edicao) {
         res.send({ mensagem: 'Livro não encontrado' });
@@ -61,8 +61,8 @@ class LivroController {
 
   static async delete(req, res) {
     try {
-      const { mediaId } = req.params;
-      const exclusao = await LivroService.excluir(mediaId);
+      const { midiaId } = req.params;
+      const exclusao = await LivroService.excluir(midiaId);
 
       if (exclusao === 0) {
         res.send({ mensagem: 'Livro não encontrado' });

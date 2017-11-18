@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const RouteValidator = require('../../middlewares/RouteValidator');
 
-class MediaSchema extends RouteValidator {
+class MidiaSchema extends RouteValidator {
 
   static get list() {
     const schema = {};
@@ -31,4 +31,4 @@ class MediaSchema extends RouteValidator {
 
 }
 
-module.exports = MediaSchema;
+module.exports = MidiaSchema;

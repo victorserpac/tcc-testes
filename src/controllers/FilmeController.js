@@ -15,9 +15,9 @@ class FilmeController {
 
   static async get(req, res) {
     try {
-      const { mediaId } = req.params;
+      const { midiaId } = req.params;
 
-      const filme = await FilmeService.obter(mediaId);
+      const filme = await FilmeService.obter(midiaId);
 
       if (!filme) {
         res.send({ mensagem: 'Filme não encontrado' });
@@ -33,20 +33,20 @@ class FilmeController {
   static async post(req, res) {
     try {
       const dados = req.body;
-      const mediaId = await FilmeService.criar(dados);
+      const midiaId = await FilmeService.criar(dados);
 
-      res.send({ mediaId });
+      res.send({ midiaId });
     } catch (error) {
       Logger.throw(res, '2365958507', error);
     }
   }
 
   static async put(req, res) {
-    const { mediaId } = req.params;
+    const { midiaId } = req.params;
     const dados = req.body;
 
     try {
-      const edicao = await FilmeService.editar(mediaId, dados);
+      const edicao = await FilmeService.editar(midiaId, dados);
 
       if (!edicao) {
         res.send({ mensagem: 'Filme não encontrado' });
@@ -61,8 +61,8 @@ class FilmeController {
 
   static async delete(req, res) {
     try {
-      const { mediaId } = req.params;
-      const exclusao = await FilmeService.excluir(mediaId);
+      const { midiaId } = req.params;
+      const exclusao = await FilmeService.excluir(midiaId);
 
       if (exclusao === 0) {
         res.send({ mensagem: 'Filme não encontrado' });

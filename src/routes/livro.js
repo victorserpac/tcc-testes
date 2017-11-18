@@ -7,16 +7,16 @@ const router = express.Router({ mergeParams: true });
 /* GET /livro */
 router.get('/', LivroSchema.list, LivroController.list);
 
-/* GET /livro/:mediaId */
-router.get('/:mediaId', LivroSchema.get, LivroController.get);
+/* GET /livro/:midiaId */
+router.get('/:midiaId', LivroSchema.get, LivroController.get);
 
 /* POST /livro */
 router.post('/', LivroSchema.post, LivroController.post);
 
-/* PUT /livro/:mediaId */
-router.put('/:mediaId', LivroSchema.put, LivroController.put);
+/* PUT /livro/:midiaId */
+router.put('/:midiaId', LivroSchema.put, LivroController.put);
 
-/* DELETE /livro/:mediaId */
-router.delete('/:mediaId', LivroSchema.delete, LivroController.delete);
+/* DELETE /livro/:midiaId */
+router.delete('/:midiaId', LivroSchema.delete, LivroController.delete);
 
 module.exports = router;

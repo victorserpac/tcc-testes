@@ -12,7 +12,7 @@ class FilmeSchema extends RouteValidator {
   static get get() {
     const schema = {
       params: Joi.object().keys({
-        mediaId: Joi.number().integer().required(),
+        midiaId: Joi.number().integer().required(),
       }),
     };
 
@@ -35,7 +35,7 @@ class FilmeSchema extends RouteValidator {
   static get put() {
     const schema = {
       params: Joi.object().keys({
-        mediaId: Joi.number().integer().required(),
+        midiaId: Joi.number().integer().required(),
       }),
       body: Joi.object().keys({
         titulo: Joi.string(),
@@ -51,7 +51,7 @@ class FilmeSchema extends RouteValidator {
   static get delete() {
     const schema = {
       params: Joi.object().keys({
-        mediaId: Joi.number().integer().required(),
+        midiaId: Joi.number().integer().required(),
       }),
     };
 

@@ -8,15 +8,15 @@ const router = express.Router({ mergeParams: true });
 router.get('/', FilmeSchema.list, FilmeController.list);
 
 /* GET /filme/:filmeId */
-router.get('/:mediaId', FilmeSchema.get, FilmeController.get);
+router.get('/:midiaId', FilmeSchema.get, FilmeController.get);
 
 /* POST /filme */
 router.post('/', FilmeSchema.post, FilmeController.post);
 
 /* PUT /filme/:filmeId */
-router.put('/:mediaId', FilmeSchema.put, FilmeController.put);
+router.put('/:midiaId', FilmeSchema.put, FilmeController.put);
 
 /* DELETE /filme/:filmeId */
-router.delete('/:mediaId', FilmeSchema.delete, FilmeController.delete);
+router.delete('/:midiaId', FilmeSchema.delete, FilmeController.delete);
 
 module.exports = router;
