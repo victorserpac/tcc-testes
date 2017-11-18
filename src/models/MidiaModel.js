@@ -47,7 +47,7 @@ class MidiaModel {
     return knex
       .update(dados)
       .from('midia')
-      .where('midia.id', id);
+      .where('id', id);
   }
 
   static excluir(id) {
@@ -56,7 +56,7 @@ class MidiaModel {
         deleted_at: Conversion.getLocal().format('YYYY-MM-DD HH:mm:ss'),
       })
       .from('midia')
-      .where('midia.id', id);
+      .where('id', id);
   }
 
   static cleanup() {
