@@ -35,7 +35,7 @@ class MidiaController {
       const { id } = req.params;
       const exclusao = await MidiaService.excluir(id);
 
-      if (exclusao === 0) {
+      if (!exclusao) {
         res.send({ mensagem: 'Livro não encontrado' });
         return;
       }
