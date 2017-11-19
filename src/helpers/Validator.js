@@ -16,7 +16,7 @@ class Validator {
     return false;
   }
 
-  static isMidiaValida(midia) {
+  static isMidiaModelValida(midia) {
     const schema = Joi.object({
       midia: Joi.object({
         id: Joi.number().integer().required(),
@@ -34,6 +34,26 @@ class Validator {
         editora: Joi.string().allow(null).required(),
       }),
     }).requiredKeys('midia', 'filme', 'livro');
+
+    if (!schema.validate(midia).error) {
+      return true;
+    }
+
+    return false;
+  }
+
+  static isMidiaValida(midia) {
+    const schema = Joi.object({
+      id: Joi.number().integer().required(),
+      titulo: Joi.string().allow(null).required(),
+      capa: Joi.string().allow(null).required(),
+      created_at: Joi.string().required(),
+      sinopse: Joi.string().allow(null),
+      diretor: Joi.string().allow(null),
+      duracao: Joi.string().allow(null),
+      autor: Joi.string().allow(null),
+      editora: Joi.string().allow(null),
+    });
 
     if (!schema.validate(midia).error) {
       return true;

@@ -16,7 +16,7 @@ const FilmeModel = require('../../src/models/FilmeModel');
 const LivroModel = require('../../src/models/LivroModel');
 
 // Helpers
-const { isMidiaValida } = require('../../src/helpers/Validator');
+const { isMidiaModelValida } = require('../../src/helpers/Validator');
 
 // Setup
 const criarMidia = async (tipo) => {
@@ -76,7 +76,7 @@ test.serial('listar(): deve retornar lista com midias', async () => {
 
   expect(midias).to.be.an('array').that.has.lengthOf(2);
   midias.forEach((midia) => {
-    expect(isMidiaValida(midia)).to.be.true;
+    expect(isMidiaModelValida(midia)).to.be.true;
   });
 });
 
@@ -91,7 +91,7 @@ test.serial('obter(): deve retornar midia', async () => {
   const midia = await MidiaModel.obter(midaId);
 
   expect(midia).to.be.an('object');
-  expect(isMidiaValida(midia)).to.be.true; 
+  expect(isMidiaModelValida(midia)).to.be.true; 
 });
 
 test.serial('obter(): deve retornar null em todos os campos do livro para midia do tipo filme', async () => {
