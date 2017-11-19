@@ -26,7 +26,7 @@ class MidiaService {
       const midia = await MidiaModel.obter(id);
 
       if (!midia) {
-        return undefined;
+        return midia;
       }
 
       if (!_.every(midia.livro, _.isNull)) {
