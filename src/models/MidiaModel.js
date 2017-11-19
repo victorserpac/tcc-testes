@@ -56,7 +56,8 @@ class MidiaModel {
         deleted_at: Conversion.getLocal().format('YYYY-MM-DD HH:mm:ss'),
       })
       .from('midia')
-      .where('id', id);
+      .where('id', id)
+      .whereNull('deleted_at');
   }
 
   static cleanup() {

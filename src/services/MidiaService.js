@@ -7,11 +7,11 @@ class MidiaService {
     const busca = await MidiaModel.listar();
 
     const midias = busca.map((midia) => {
-      if (_.some(midia.livro, _.identity)) {
+      if (!_.every(midia.livro, _.isNull)) {
         return _.merge(midia.midia, midia.livro);
       }
 
-      if (_.some(midia.filme, _.identity)) {
+      if (!_.every(midia.filme, _.isNull)) {
         return _.merge(midia.midia, midia.filme);
       }
 
@@ -26,14 +26,14 @@ class MidiaService {
       const midia = await MidiaModel.obter(id);
 
       if (!midia) {
-        return false;
+        return undefined;
       }
 
-      if (_.some(midia.livro, _.identity)) {
+      if (!_.every(midia.livro, _.isNull)) {
         return _.merge(midia.midia, midia.livro);
       }
 
-      if (_.some(midia.filme, _.identity)) {
+      if (!_.every(midia.filme, _.isNull)) {
         return _.merge(midia.midia, midia.filme);
       }
 
@@ -68,7 +68,15 @@ class MidiaService {
   }
 
   static async excluir(id) {
-    return MidiaModel.excluir(id);
+    try {
+      if (await MidiaModel.excluir(id)) {
+        return true;
+      }
+
+      return false;
+    } catch (error) {
+      throw error;
+    }
   }
 }
 
