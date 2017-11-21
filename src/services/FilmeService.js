@@ -79,7 +79,17 @@ class FilmeService {
   }
 
   static async excluir(midiaId) {
-    return FilmeModel.excluir(midiaId);
+    try {
+      const delecao = await MidiaService.excluir(midiaId);
+
+      if (delecao) {
+        return true;
+      }
+
+      return false;
+    } catch (error) {
+      throw error;
+    }
   }
 }
 
