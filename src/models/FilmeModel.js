@@ -40,7 +40,7 @@ class FilmeModel {
     return knex
       .update(dados)
       .from('filme')
-      .where('filme.midia_id', midiaId);
+      .where('midia_id', midiaId);
   }
 
   static excluir(midiaId) {
