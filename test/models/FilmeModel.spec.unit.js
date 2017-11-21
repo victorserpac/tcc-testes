@@ -102,16 +102,6 @@ test.serial('editar(): deve validar query builder', async () => {
   expect(where.calledWith('midia_id', id)).to.be.true;
 });
 
-test.serial('excluir(): deve validar query builder', async () => {
-  const id = 1;
-
-  FilmeModel.excluir(id);
-
-  expect(update.calledWith({ deleted_at: Conversion.getLocal().format('YYYY-MM-DD HH:mm:ss') })).to.be.true;
-  expect(from.calledWith('midia')).to.be.true;
-  expect(where.calledWith('id', id)).to.be.true;
-});
-
 test.serial('cleanup(): deve validar query builder', async () => {
   FilmeModel.cleanup();
 

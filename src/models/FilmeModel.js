@@ -1,4 +1,3 @@
-const Conversion = require('../helpers/Conversion');
 const { knex } = require('../config/db');
 
 const CAMPOS_FILME = [
@@ -41,15 +40,6 @@ class FilmeModel {
       .update(dados)
       .from('filme')
       .where('midia_id', midiaId);
-  }
-
-  static excluir(midiaId) {
-    return knex
-      .update({
-        deleted_at: Conversion.getLocal().format('YYYY-MM-DD HH:mm:ss'),
-      })
-      .from('midia')
-      .where('id', midiaId);
   }
 
   static cleanup() {
