@@ -69,8 +69,8 @@ class LivroService {
     }
   }
 
-  static async excluir(midiaId) {
-    return LivroModel.excluir(midiaId);
+  static excluir(midiaId) {
+    return MidiaService.excluir(midiaId);
   }
 }
 
