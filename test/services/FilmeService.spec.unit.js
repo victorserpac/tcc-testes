@@ -4,9 +4,6 @@ const sinon = require('sinon');
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 
-// .env lib
-require('dotenv').config();
-
 chai.use(chaiAsPromised);
 const { expect } = chai;
 
@@ -62,8 +59,8 @@ test('listar(): deve retornar lista de filmes', async () => {
 });
 
 test('listar(): deve lançar um erro', async () => {
-  const listar = sandbox.stub(FilmeModel, 'listar').throws();
-
+  const listar = sandbox.stub(FilmeModel, 'listar').rejects();
+  
   expect(FilmeService.listar()).to.be.rejected;
   expect(listar.called).to.be.true;
 });
@@ -90,7 +87,7 @@ test('obter(): deve retornar "undefined" para filme não encontrada', async () =
 
 test('obter(): deve lançar um erro', async () => {
   const midiaId = 1178;
-  const obter = sandbox.stub(FilmeModel, 'obter').throws();
+  const obter = sandbox.stub(FilmeModel, 'obter').rejects();
 
   expect(FilmeService.obter(midiaId)).to.be.rejected;
   expect(obter.calledWith(midiaId)).to.be.true;
@@ -137,7 +134,7 @@ test('criar(): deve lançar erro no MidiaService', async () => {
     duracao: 'Duracao',
   };
 
-  const criarMidia = sandbox.stub(MidiaService, 'criar').throws();
+  const criarMidia = sandbox.stub(MidiaService, 'criar').rejects();
   const criarFilme = sandbox.stub(FilmeModel, 'criar').resolves();
 
   expect(FilmeService.criar(dadosParaCriar)).to.be.rejected;
@@ -155,7 +152,7 @@ test('criar(): deve lançar erro no FilmeModel', async () => {
   };
 
   const criarMidia = sandbox.stub(MidiaService, 'criar').resolves(1178);
-  const criarFilme = sandbox.stub(FilmeModel, 'criar').throws();
+  const criarFilme = sandbox.stub(FilmeModel, 'criar').rejects();
 
   try {
     await FilmeService.criar(dadosParaCriar);
@@ -283,7 +280,7 @@ test('editar(): deve rejeitar promise por problema em FilmeModel', async () => {
     duracao: 'Duracao',
   };
 
-  const editarFilme = sandbox.stub(FilmeModel, 'editar').throws();
+  const editarFilme = sandbox.stub(FilmeModel, 'editar').rejects();
   const editarMidia = sandbox.stub(MidiaService, 'editar');
 
   expect(FilmeService.editar(midiaId, dadosParaEditar)).to.be.rejected;
@@ -302,7 +299,7 @@ test('editar(): deve rejeitar promise por problema em MidiaService', async () =>
   };
 
   const editarFilme = sandbox.stub(FilmeModel, 'editar').resolves(1);
-  const editarMidia = sandbox.stub(MidiaService, 'editar').throws();
+  const editarMidia = sandbox.stub(MidiaService, 'editar').rejects();
 
   try {
     await FilmeService.editar(midiaId, dadosParaEditar)
@@ -334,7 +331,7 @@ test('excluir(): deve retornar "false" em erro ao exluir', async () => {
 
 test('excluir(): retornar rejeitar promise', async () => {
   const midiaId = 1178;
-  const excluir = sandbox.stub(MidiaService, 'excluir').throws();
+  const excluir = sandbox.stub(MidiaService, 'excluir').rejects();
 
   expect(FilmeService.excluir(midiaId)).to.be.rejectedWith(Error);
   expect(excluir.calledWith(midiaId)).to.be.true;

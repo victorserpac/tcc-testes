@@ -4,14 +4,8 @@ const MidiaService = require('../services/MidiaService');
 
 class FilmeService {
 
-  static async listar() {
-    try {
-      const filmes = await FilmeModel.listar();
-
-      return filmes;
-    } catch (error) {
-      throw error;
-    }
+  static listar() {
+    return FilmeModel.listar();
   }
 
   static async obter(midiaId) {
@@ -79,17 +73,7 @@ class FilmeService {
   }
 
   static async excluir(midiaId) {
-    try {
-      const delecao = await MidiaService.excluir(midiaId);
-
-      if (delecao) {
-        return true;
-      }
-
-      return false;
-    } catch (error) {
-      throw error;
-    }
+    return MidiaService.excluir(midiaId);
   }
 }
 
