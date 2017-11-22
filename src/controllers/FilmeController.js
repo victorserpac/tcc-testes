@@ -64,7 +64,7 @@ class FilmeController {
       const { midiaId } = req.params;
       const exclusao = await FilmeService.excluir(midiaId);
 
-      if (exclusao === 0) {
+      if (exclusao === false) {
         res.send({ mensagem: 'Filme não encontrado' });
         return;
       }
