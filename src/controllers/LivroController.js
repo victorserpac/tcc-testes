@@ -64,7 +64,7 @@ class LivroController {
       const { midiaId } = req.params;
       const exclusao = await LivroService.excluir(midiaId);
 
-      if (exclusao === 0) {
+      if (!exclusao) {
         res.send({ mensagem: 'Livro não encontrado' });
         return;
       }
