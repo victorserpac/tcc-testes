@@ -8,8 +8,8 @@ chai.use(chaiAsPromised);
 const { expect } = chai;
 
 // Dependencias
-const MidiaModel = require('../../src/models/MidiaModel');
-const { knex } = require('../../src/config/db');
+const MidiaModel = require('../../../src/models/MidiaModel');
+const { knex } = require('../../../src/config/db');
 knex.options = () => {};
 
 let select;

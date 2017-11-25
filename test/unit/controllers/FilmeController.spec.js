@@ -4,24 +4,26 @@ const sinon = require('sinon');
 const { expect } = require('chai');
 
 // Dependencias
-const LivroController = require('../../src/controllers/LivroController');
-const LivroService = require('../../src/services/LivroService');
-const Logger = require('../../src/helpers/Logger');
+const FilmeController = require('../../../src/controllers/FilmeController');
+const FilmeService = require('../../../src/services/FilmeService');
+const Logger = require('../../../src/helpers/Logger');
 
-const livro = () => ({
-  id: 1181,
+const filme = () => ({
+  id: 1180,
   titulo: 'Titulo',
   capa: 'Capa',
-  autor: 'Autor',
-  editora: 'Editora',
+  diretor: 'Diretor',
+  sinopse: 'Sinopse',
+  duracao: 'Duracao',
   created_at: '2017-11-20 23:50:44',
 });
 
-const livroSchema = () => ({
+const filmeSchema = () => ({
   titulo: 'Titulo',
   capa: 'Capa',
-  autor: 'Autor',
-  editora: 'Editora',
+  diretor: 'Diretor',
+  sinopse: 'Sinopse',
+  duracao: 'Duracao',
 });
 
 let sandbox;
@@ -38,55 +40,55 @@ test('list(): deve responder com lista vazia', async () => {
   const req = {};
   const res = { send: sinon.spy() };
 
-  const listar = sandbox.stub(LivroService, 'listar').resolves([]);
+  const listar = sandbox.stub(FilmeService, 'listar').resolves([]);
 
-  await LivroController.list(req, res);
+  await FilmeController.list(req, res);
 
   const response = res.send.firstCall.args[0];
 
   expect(listar.called).to.be.true;
-  expect(response).to.be.an('object').that.has.property('livros').that.is.an('array').that.is.empty;
+  expect(response).to.be.an('object').that.has.property('filmes').that.is.an('array').that.is.empty;
 });
 
-test('list(): deve responder com lista de livros', async () => {
+test('list(): deve responder com lista de filmes', async () => {
   const req = {};
   const res = { send: sinon.spy() };
 
-  const listar = sandbox.stub(LivroService, 'listar').resolves([
-    livro(),
-    livro(),
+  const listar = sandbox.stub(FilmeService, 'listar').resolves([
+    filme(),
+    filme(),
   ]);
 
-  await LivroController.list(req, res);
+  await FilmeController.list(req, res);
 
   const response = res.send.firstCall.args[0];
 
   expect(listar.called).to.be.true;
   expect(res.send.called).to.be.true;
-  expect(response).to.be.an('object').that.has.property('livros').that.is.an('array').that.has.lengthOf(2);
+  expect(response).to.be.an('object').that.has.property('filmes').that.is.an('array').that.has.lengthOf(2);
 });
 
 test('list(): deve responder mensagem de erro', async () => {
   const req = {};
   const res = { send: sinon.spy() };
 
-  const listar = sandbox.stub(LivroService, 'listar').rejects();
+  const listar = sandbox.stub(FilmeService, 'listar').rejects();
   const loggerThrow = sandbox.stub(Logger, 'throw');
 
-  await LivroController.list(req, res);
+  await FilmeController.list(req, res);
 
   expect(listar.called).to.be.true;
   expect(loggerThrow.calledWith(res, '3272358416', sinon.match.instanceOf(Error))).to.be.true;
 });
 
-test('get(): deve responder com mensagem para livro não encontrado', async () => {
-  const midiaId = 1181;
+test('get(): deve responder com mensagem para filme não encontrado', async () => {
+  const midiaId = 1180;
   const req = { params: { midiaId } };
   const res = { send: sinon.spy() };
 
-  const obter = sandbox.stub(LivroService, 'obter').resolves(undefined);
+  const obter = sandbox.stub(FilmeService, 'obter').resolves(undefined);
 
-  await LivroController.get(req, res);
+  await FilmeController.get(req, res);
 
   const response = res.send.firstCall.args[0];
 
@@ -95,45 +97,45 @@ test('get(): deve responder com mensagem para livro não encontrado', async () =
   expect(response).to.be.an('object').that.has.property('mensagem').that.is.a('string');
 });
 
-test('get(): deve responder com livro', async () => {
-  const midiaId = 1181;
+test('get(): deve responder com filme', async () => {
+  const midiaId = 1180;
   const req = { params: { midiaId } };
   const res = { send: sinon.spy() };
 
-  const obter = sandbox.stub(LivroService, 'obter').resolves(livro());
+  const obter = sandbox.stub(FilmeService, 'obter').resolves(filme());
 
-  await LivroController.get(req, res);
+  await FilmeController.get(req, res);
 
   const response = res.send.firstCall.args[0];
 
   expect(obter.calledWith(midiaId)).to.be.true;
   expect(res.send.called).to.be.true;
-  expect(response).to.be.an('object').that.has.property('livro').that.is.an('object');
+  expect(response).to.be.an('object').that.has.property('filme').that.is.an('object');
 });
 
 test('get(): deve responder mensagem de erro', async () => {
-  const midiaId = 1181;
+  const midiaId = 1180;
   const req = { params: { midiaId } };
   const res = { send: sinon.spy() };
 
-  const obter = sandbox.stub(LivroService, 'obter').rejects();
+  const obter = sandbox.stub(FilmeService, 'obter').rejects();
   const loggerThrow = sandbox.stub(Logger, 'throw');
 
-  await LivroController.get(req, res);
+  await FilmeController.get(req, res);
 
   expect(obter.calledWith(midiaId)).to.be.true;
   expect(res.send.called).to.be.false;
   expect(loggerThrow.calledWith(res, '6001059324', sinon.match.instanceOf(Error))).to.be.true;
 });
 
-test('post(): deve responder midiaId do livro criado', async () => {
-  const midiaId = livro().id;
-  const req = { body: livroSchema() };
+test('post(): deve responder midiaId do filme criado', async () => {
+  const midiaId = filme().id;
+  const req = { body: filmeSchema() };
   const res = { send: sinon.spy() };
 
-  const criar = sandbox.stub(LivroService, 'criar').resolves(midiaId);
+  const criar = sandbox.stub(FilmeService, 'criar').resolves(midiaId);
 
-  await LivroController.post(req, res);
+  await FilmeController.post(req, res);
 
   const response = res.send.firstCall.args[0];
 
@@ -143,61 +145,59 @@ test('post(): deve responder midiaId do livro criado', async () => {
 });
 
 test('post(): deve responder mensagem de erro', async () => {
-  const midiaId = livro().id;
-  const req = { body: livroSchema() };
+  const midiaId = filme().id;
+  const req = { body: filmeSchema() };
   const res = { send: sinon.spy() };
 
-  const criar = sandbox.stub(LivroService, 'criar').rejects();
+  const criar = sandbox.stub(FilmeService, 'criar').rejects();
   const loggerThrow = sandbox.stub(Logger, 'throw');
 
-  await LivroController.post(req, res);
+  await FilmeController.post(req, res);
 
   expect(criar.calledWith(req.body)).to.be.true;
   expect(res.send.called).to.be.false;
   expect(loggerThrow.calledWith(res, '2365958507', sinon.match.instanceOf(Error))).to.be.true;
 });
 
-test('put(): deve responder com mensagem para livro não contrado', async () => {
-  const midiaId = 1181;
-  const req = { params: { midiaId }, body: livroSchema() };
-  const res = { send: sinon.spy(), sendStatus: sinon.spy() };
+test('put(): deve responder com mensagem para filme não contrado', async () => {
+  const midiaId = 1180;
+  const req = { params: { midiaId }, body: filmeSchema() };
+  const res = { send: sinon.spy() };
 
-  const editar = sandbox.stub(LivroService, 'editar').resolves(false);
+  const editar = sandbox.stub(FilmeService, 'editar').resolves(false);
 
-  await LivroController.put(req, res);
+  await FilmeController.put(req, res);
 
   const response = res.send.firstCall.args[0];
 
   expect(editar.calledWith(midiaId, req.body)).to.be.true;
   expect(res.send.called).to.be.true;
-  expect(res.sendStatus.called).to.be.false;
   expect(response).to.be.an('object').that.has.property('mensagem').that.is.a('string');
 });
 
-test('put(): deve responder status 204 para livro editado', async () => {
-  const midiaId = 1181;
-  const req = { params: { midiaId }, body: livroSchema() };
-  const res = { send: sinon.spy(), sendStatus: sinon.spy() };
+test('put(): deve responder status 204 para filme editado', async () => {
+  const midiaId = 1180;
+  const req = { params: { midiaId }, body: filmeSchema() };
+  const res = { sendStatus: sinon.spy() };
 
-  const editar = sandbox.stub(LivroService, 'editar').resolves(true);
+  const editar = sandbox.stub(FilmeService, 'editar').resolves(true);
 
-  await LivroController.put(req, res);
+  await FilmeController.put(req, res);
 
   expect(editar.calledWith(midiaId, req.body)).to.be.true;
-  expect(res.send.called).to.be.false;
   expect(res.sendStatus.called).to.be.true;
   expect(res.sendStatus.calledWith(204)).to.be.true;
 });
 
 test('put(): deve responder mensagem de erro', async () => {
-  const midiaId = 1181;
-  const req = { params: { midiaId }, body: livroSchema() };
+  const midiaId = 1180;
+  const req = { params: { midiaId }, body: filmeSchema() };
   const res = { send: sinon.spy(), sendStatus: sinon.spy() };
 
-  const editar = sandbox.stub(LivroService, 'editar').rejects();
+  const editar = sandbox.stub(FilmeService, 'editar').rejects();
   const loggerThrow = sandbox.stub(Logger, 'throw');
 
-  await LivroController.put(req, res);
+  await FilmeController.put(req, res);
 
   expect(editar.calledWith(midiaId, req.body)).to.be.true;
   expect(res.sendStatus.called).to.be.false;
@@ -205,14 +205,14 @@ test('put(): deve responder mensagem de erro', async () => {
   expect(loggerThrow.calledWith(res, '5768905470', sinon.match.instanceOf(Error))).to.be.true;
 });
 
-test('delete(): deve responder com mensagem para livro não contrado', async () => {
-  const midiaId = 1181;
+test('delete(): deve responder com mensagem para filme não contrado', async () => {
+  const midiaId = 1180;
   const req = { params: { midiaId } };
   const res = { send: sinon.spy(), sendStatus: sinon.spy() };
 
-  const excluir = sandbox.stub(LivroService, 'excluir').resolves(false);
+  const excluir = sandbox.stub(FilmeService, 'excluir').resolves(false);
 
-  await LivroController.delete(req, res);
+  await FilmeController.delete(req, res);
 
   const response = res.send.firstCall.args[0];
 
@@ -222,14 +222,14 @@ test('delete(): deve responder com mensagem para livro não contrado', async () 
   expect(response).to.be.an('object').that.has.property('mensagem').that.is.a('string');
 });
 
-test('delete(): deve responder status 204 para livro excluído', async () => {
-  const midiaId = 1181;
+test('delete(): deve responder status 204 para filme excluído', async () => {
+  const midiaId = 1180;
   const req = { params: { midiaId } };
   const res = { send: sinon.spy(), sendStatus: sinon.spy() };
 
-  const excluir = sandbox.stub(LivroService, 'excluir').resolves(true);
+  const excluir = sandbox.stub(FilmeService, 'excluir').resolves(true);
 
-  await LivroController.delete(req, res);
+  await FilmeController.delete(req, res);
 
   expect(excluir.calledWith(midiaId)).to.be.true;
   expect(res.send.called).to.be.false;
@@ -237,14 +237,14 @@ test('delete(): deve responder status 204 para livro excluído', async () => {
 });
 
 test('delete(): deve responder mensagem de erro', async () => {
-  const midiaId = 1181;
+  const midiaId = 1180;
   const req = { params: { midiaId } };
   const res = { send: sinon.spy(), sendStatus: sinon.spy() };
 
-  const excluir = sandbox.stub(LivroService, 'excluir').rejects();
+  const excluir = sandbox.stub(FilmeService, 'excluir').rejects();
   const loggerThrow = sandbox.stub(Logger, 'throw');
 
-  await LivroController.delete(req, res);
+  await FilmeController.delete(req, res);
 
   expect(excluir.calledWith(midiaId)).to.be.true;
   expect(res.send.called).to.be.false;

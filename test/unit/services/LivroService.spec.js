@@ -8,9 +8,9 @@ chai.use(chaiAsPromised);
 const { expect } = chai;
 
 // Dependencias
-const LivroService = require('../../src/services/LivroService');
-const LivroModel = require('../../src/models/LivroModel');
-const MidiaService = require('../../src/services/MidiaService');
+const LivroService = require('../../../src/services/LivroService');
+const LivroModel = require('../../../src/models/LivroModel');
+const MidiaService = require('../../../src/services/MidiaService');
 
 const livro = () => ({
   id: 1179,

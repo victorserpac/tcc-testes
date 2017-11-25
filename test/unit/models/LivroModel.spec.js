@@ -4,9 +4,9 @@ const sinon = require('sinon');
 const { expect } = require('chai');
 
 // Dependencias
-const FilmeModel = require('../../src/models/FilmeModel');
-const { knex } = require('../../src/config/db');
-const Conversion = require('../../src/helpers/Conversion');
+const LivroModel = require('../../../src/models/LivroModel');
+const { knex } = require('../../../src/config/db');
+const Conversion = require('../../../src/helpers/Conversion');
 
 let select;
 let from;
@@ -53,58 +53,66 @@ test.afterEach(() => {
 });
 
 test.serial('listar(): deve validar query builder', async () => {
-  FilmeModel.listar();
+  LivroModel.listar();
 
   expect(select.called).to.be.true;
-  expect(from.calledWith('midia')).to.be.true;
-  expect(leftJoin.calledWith('filme', 'filme.midia_id', 'midia.id')).to.be.true;
+  expect(from.calledWith('livro')).to.be.true;
+  expect(leftJoin.calledWith('midia', 'livro.midia_id', 'midia.id')).to.be.true;
   expect(whereNull.calledWith('midia.deleted_at')).to.be.true;
 });
 
 test.serial('obter(): deve validar query builder', async () => {
   const id = 1;
 
-  FilmeModel.obter(id);
+  LivroModel.obter(id);
 
   expect(select.called).to.be.true;
-  expect(from.calledWith('midia')).to.be.true;
-  expect(leftJoin.calledWith('filme', 'filme.midia_id', 'midia.id')).to.be.true;
+  expect(from.calledWith('livro')).to.be.true;
+  expect(leftJoin.calledWith('midia', 'livro.midia_id', 'midia.id')).to.be.true;
   expect(where.calledWith('midia.id', id)).to.be.true;
   expect(whereNull.calledWith('midia.deleted_at')).to.be.true;
   expect(first.called).to.be.true;
 });
 
 test.serial('criar(): deve validar query builder', async () => {
-  const filme = {
-    sinopse: 'Sinopse',
-    diretor: 'Diretor',
-    duracao: 'Duracao',
+  const livro = {
+    autor: 'Autor',
+    editora: 'Editora',
   };
 
-  FilmeModel.criar(filme);
+  LivroModel.criar(livro);
 
-  expect(insert.calledWith(filme)).to.be.true;
-  expect(into.calledWith('filme')).to.be.true;
+  expect(insert.calledWith(livro)).to.be.true;
+  expect(into.calledWith('livro')).to.be.true;
 });
 
 test.serial('editar(): deve validar query builder', async () => {
   const id = 1;
   const dados = {
-    sinopse: 'Sinopse',
-    diretor: 'Diretor',
-    duracao: 'Duracao',
+    autor: 'Autor',
+    editora: 'Editora',
   };
 
-  FilmeModel.editar(id, dados);
+  LivroModel.editar(id, dados);
 
   expect(update.calledWith(dados)).to.be.true;
-  expect(from.calledWith('filme')).to.be.true;
+  expect(from.calledWith('livro')).to.be.true;
   expect(where.calledWith('midia_id', id)).to.be.true;
 });
 
+test.serial('excluir(): deve validar query builder', async () => {
+  const id = 1;
+
+  LivroModel.excluir(id);
+
+  expect(update.calledWith({ deleted_at: Conversion.getLocal().format('YYYY-MM-DD HH:mm:ss') })).to.be.true;
+  expect(from.calledWith('midia')).to.be.true;
+  expect(where.calledWith('id', id)).to.be.true;
+});
+
 test.serial('cleanup(): deve validar query builder', async () => {
-  FilmeModel.cleanup();
+  LivroModel.cleanup();
 
   expect(deleteStub.called).to.be.true;
-  expect(from.calledWith('filme')).to.be.true;
+  expect(from.calledWith('livro')).to.be.true;
 });

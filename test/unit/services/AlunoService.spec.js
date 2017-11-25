@@ -8,8 +8,8 @@ chai.use(chaiAsPromised);
 const { expect } = chai;
 
 // Dependencias
-const AlunoService = require('../../src/services/AlunoService');
-const AlunoModel = require('../../src/models/AlunoModel');
+const AlunoService = require('../../../src/services/AlunoService');
+const AlunoModel = require('../../../src/models/AlunoModel');
 
 const aluno = () => ({
   matricula: 20142850076,

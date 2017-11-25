@@ -8,12 +8,12 @@ chai.use(chaiAsPromised);
 const { expect } = chai;
 
 // Dependencias
-const FilmeService = require('../../src/services/FilmeService');
-const FilmeModel = require('../../src/models/FilmeModel');
-const MidiaService = require('../../src/services/MidiaService');
+const FilmeService = require('../../../src/services/FilmeService');
+const FilmeModel = require('../../../src/models/FilmeModel');
+const MidiaService = require('../../../src/services/MidiaService');
 
 // Helpers
-const { isMidiaValida } = require('../../src/helpers/Validator');
+const { isMidiaValida } = require('../../../src/helpers/Validator');
 
 const filme = () => ({
   id: 1178,

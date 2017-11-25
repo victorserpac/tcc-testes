@@ -8,8 +8,8 @@ chai.use(chaiAsPromised);
 const { expect } = chai;
 
 // Dependencias
-const AlunoModel = require('../../src/models/AlunoModel');
-const { knex } = require('../../src/config/db');
+const AlunoModel = require('../../../src/models/AlunoModel');
+const { knex } = require('../../../src/config/db');
 
 let select;
 let from;

@@ -100,7 +100,7 @@ test.serial.skip('POST /aluno - deve reativar conta de aluno excluido', async ()
   expect(body).to.be.an('object').that.has.property('matricula').that.is.a('number');
 });
 
-test.serial('put(): deve retornar status 204 para aluno editado', async () => {
+test.serial('PUT /aluno/{matricula} - deve retornar status 204 para aluno editado', async () => {
   const matricula = 20142850076;
   const aluno = {
     nome: 'Victor do Carmo',
@@ -114,7 +114,7 @@ test.serial('put(): deve retornar status 204 para aluno editado', async () => {
     .expect(204);
 });
 
-test.serial('put(): deve retornar mensagem para aluno não encontrado', async () => {
+test.serial('PUT /aluno/{matricula} - deve retornar mensagem para aluno não encontrado', async () => {
   const matricula = 20142850076;
   const aluno = {
     nome: 'Victor do Carmo',
@@ -128,7 +128,7 @@ test.serial('put(): deve retornar mensagem para aluno não encontrado', async ()
   expect(body).to.be.an('object').that.has.property('mensagem').that.is.a('string');
 });
 
-test.serial('delete(): deve retornar mensagem para aluno não encontrado', async () => {
+test.serial('DELETE /aluno/{matricula} - deve retornar mensagem para aluno não encontrado', async () => {
   const matricula = 20142850076;
 
   const { body } = await request(app)
@@ -138,7 +138,7 @@ test.serial('delete(): deve retornar mensagem para aluno não encontrado', async
   expect(body).to.be.an('object').that.has.property('mensagem').that.is.a('string');
 });
 
-test.serial('delete(): deve retornar status 204 para aluno excluido', async () => {
+test.serial('DELETE /aluno/{matricula} - deve retornar status 204 para aluno excluido', async () => {
   const matricula = 20142850076;
 
   await criarAluno(matricula);

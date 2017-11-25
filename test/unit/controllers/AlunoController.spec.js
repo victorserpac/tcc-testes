@@ -8,10 +8,10 @@ chai.use(chaiAsPromised);
 const { expect } = chai;
 
 // Dependencias
-const AlunoController = require('../../src/controllers/AlunoController');
-const AlunoService = require('../../src/services/AlunoService');
-const AlunoModel = require('../../src/models/AlunoModel');
-const Logger = require('../../src/helpers/Logger');
+const AlunoController = require('../../../src/controllers/AlunoController');
+const AlunoService = require('../../../src/services/AlunoService');
+const AlunoModel = require('../../../src/models/AlunoModel');
+const Logger = require('../../../src/helpers/Logger');
 
 const aluno = () => {
   return {
